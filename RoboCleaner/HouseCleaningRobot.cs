@@ -17,6 +17,11 @@ public class Cell()
     private readonly HashSet<Direction> visitedDirections = new();
     public bool IsObstacle { get; init; }
 
+    /// <summary>
+    /// Visits the cell and records the direction it is being visited with.
+    /// </summary>
+    /// <param name="direction">The direction of the visit.</param>
+    /// <returns>False if the cell has been previously visited in the same direction.</returns>
     public bool Visit(Direction direction)
     {
         if (visitedDirections.Contains(direction))
@@ -27,6 +32,10 @@ public class Cell()
         return true;
     }
 
+    /// <summary>
+    /// Whether the cell has been previously visited at all.
+    /// </summary>
+    /// <returns>True if the cell has been previously visited in any direction.</returns>
     public bool PreviouslyVisited() => visitedDirections.Any();
 }
 
