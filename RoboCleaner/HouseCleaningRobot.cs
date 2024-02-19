@@ -69,15 +69,15 @@ public class HouseCleaningRobot
     public int CleanFloor()
     {
         Position currentPosition = _startingPosition;
-        int numCellsMoved = 0;
+        int numCellsVisited = 1;
         
         while(Visit(currentPosition))
         {
             var movementResult = Move(currentPosition);
-            numCellsMoved += movementResult.NumCellsMoved;
+            numCellsVisited += movementResult.NumCellsMoved;
             currentPosition = movementResult.NewPosition;
         }
-        return numCellsMoved;
+        return numCellsVisited;
     }
 
     private bool Visit(Position position)
