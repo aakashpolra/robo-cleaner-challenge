@@ -5,7 +5,7 @@ public record Position(int Row, int Column, Direction Direction);
 
 public record MovementResult (int NumCellsMoved, Position NewPosition);
 
-public class Constants
+public class CellTypes
 {
     public const char EmptyCell = '.';
     public const char Obstacle = 'o';
@@ -49,8 +49,8 @@ public class HouseCleaningRobot
             _grid[row] = new Cell[input[row].Length];
             for (int column = 0; column < _grid[row].Length; column++)
             {
-                _grid[row][column] = new Cell { IsObstacle = input[row][column] == Constants.Obstacle };
-                if (input[row][column] == Constants.StartingPoint)
+                _grid[row][column] = new Cell { IsObstacle = input[row][column] == CellTypes.Obstacle };
+                if (input[row][column] == CellTypes.StartingPoint)
                 {
                     _startingPosition = new Position(row, column, StartingDirection);
                 }
