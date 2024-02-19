@@ -14,18 +14,20 @@ public class Constants
 
 public class Cell()
 {
-    private readonly Dictionary<Direction, bool> visited = new();
+    private readonly HashSet<Direction> visitedDirections = new();
     public bool IsObstacle { get; init; }
 
     public bool Visit(Direction direction)
     {
-        if (!visited.ContainsKey(direction))
+        if (visitedDirections.Contains(direction))
         {
-            visited[direction] = true;
-            return true;
+            return false;
         }
-        return false;
+        visitedDirections.Add(direction);
+        return true;
     }
+
+    public bool PreviouslyVisited() => visitedDirections.Any();
 }
 
 public class HouseCleaningRobot
@@ -84,11 +86,16 @@ public class HouseCleaningRobot
             Direction.Up => currentPosition with { Row = currentPosition.Row - 1 },
             Direction.Down => currentPosition with { Row = currentPosition.Row + 1 }
         };
+
+        // Rotate
         if (!IsValidPosition(nextPosition))
         {
             return new MovementResult(0, currentPosition with { Direction = Rotate(currentPosition.Direction) });
         }
-        return new MovementResult(1, nextPosition);
+
+        // Move
+        int cellsMoved = _grid[nextPosition.Row][nextPosition.Column].PreviouslyVisited() ? 0 : 1;
+        return new MovementResult(cellsMoved, nextPosition);
     }
 
     private bool IsValidPosition(Position position) =>
@@ -103,7 +110,6 @@ public class HouseCleaningRobot
         Direction.Up => Direction.Left,
         Direction.Left => Direction.Down,
         Direction.Down => Direction.Right,
-        Direction.Right => Direction.Up,
-        _ => throw new ArgumentException("Unknown direction found.")
+        Direction.Right => Direction.Up
     };
 }
