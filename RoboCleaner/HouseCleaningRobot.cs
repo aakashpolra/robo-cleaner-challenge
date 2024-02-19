@@ -2,7 +2,6 @@
 
 public enum Direction { Right = 0, Up = 1, Left = 2, Down = 3 }
 public record Position(int Row, int Column, Direction Direction);
-
 public record MovementResult (int NumCellsMoved, Position NewPosition);
 
 public class CellTypes
