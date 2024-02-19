@@ -28,21 +28,27 @@ public class Cell()
 
 public class HouseCleaningRobot
 {
-    private readonly Cell[][] grid;
+    private readonly Cell[][] _grid;
+    private Position _startingPosition;
+    private const Direction startingDirection = Direction.Right;
 
     public HouseCleaningRobot(string[] input)
     {
-        grid = new Cell[input.Length][];
+        _grid = new Cell[input.Length][];
         InitializeGrid(input);
     }
 
     private void InitializeGrid(string[] input)
     {
-        for (int row = 0; row < grid.Length; row++)
+        for (int row = 0; row < _grid.Length; row++)
         {
-            for (int column = 0; column < grid[row].Length; column++)
+            for (int column = 0; column < _grid[row].Length; column++)
             {
-                grid[row][column] = new Cell { IsObstacle = input[row][column] == Constants.Obstacle };
+                _grid[row][column] = new Cell { IsObstacle = input[row][column] == Constants.Obstacle };
+                if (input[row][column] == Constants.StartingPoint)
+                {
+                    _startingPosition = new Position(row, column);
+                }
             }
         }
     }
