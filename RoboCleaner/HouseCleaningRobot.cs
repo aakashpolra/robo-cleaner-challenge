@@ -2,7 +2,7 @@
 
 public enum Direction { Right = 0, Up = 1, Left = 2, Down = 3 }
 public record Position(int Row, int Column, Direction Direction);
-public record MovementResult (int NumCellsMoved, Position NewPosition);
+public record MovementResult (int NumberOfUniqueCellsVisited, Position NewPosition);
 
 public class CellTypes
 {
@@ -74,7 +74,7 @@ public class HouseCleaningRobot
         while(Visit(currentPosition))
         {
             var movementResult = Move(currentPosition);
-            numCellsVisited += movementResult.NumCellsMoved;
+            numCellsVisited += movementResult.NumberOfUniqueCellsVisited;
             currentPosition = movementResult.NewPosition;
         }
         return numCellsVisited;
