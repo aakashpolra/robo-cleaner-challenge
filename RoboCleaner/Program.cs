@@ -1,4 +1,4 @@
-﻿using RoboCleaner;
+﻿using RoboCleaner.Services;
 
 Console.WriteLine("Hello, Dirty House!");
 
@@ -23,7 +23,7 @@ string[] input3 = [
     "s...o",
     "..o.o" ] ;
 
-Console.WriteLine(new HouseCleaningRobot(input1).CleanFloor());
-Console.WriteLine(new HouseCleaningRobot(input2).CleanFloor());
-Console.WriteLine(new HouseCleaningRobot(input3).CleanFloor());
+Console.WriteLine(new HouseCleaningService(input1).CleanFloor());
+Console.WriteLine(new HouseCleaningService(input2).CleanFloor());
+Console.WriteLine(new HouseCleaningService(input3).CleanFloor());
 Console.ReadKey();
