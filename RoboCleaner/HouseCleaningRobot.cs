@@ -109,7 +109,7 @@ public class HouseCleaningRobot
     private bool IsValidPosition(Position position) =>
         !(
         position.Row < 0 || position.Row >= _grid.Length ||
-        position.Column < 0 || position.Column >= _grid.Length ||
+        position.Column < 0 || position.Column >= _grid[position.Row].Length ||
         _grid[position.Row][position.Column].IsObstacle
         );
 
