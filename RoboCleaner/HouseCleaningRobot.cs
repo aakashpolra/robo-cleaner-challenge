@@ -1,8 +1,8 @@
 ﻿namespace RoboCleaner;
 
 public enum Direction { Right = 0, Up = 1, Left = 2, Down = 3 }
-public record Position(int Row, int Column, Direction Direction);
-public record MovementResult (int NumberOfUniqueCellsVisited, Position NewPosition);
+public record PositionVector(int Row, int Column, Direction Direction);
+public record MovementResult (int NumberOfUniqueCellsVisited, PositionVector NewPosition);
 
 public class CellTypes
 {
@@ -42,7 +42,7 @@ public class HouseCleaningRobot
 {
     private readonly Cell[][] _grid;
     private const Direction StartingDirection = Direction.Right;
-    private Position _startingPosition;
+    private PositionVector _startingPosition;
 
     public HouseCleaningRobot(string[] input)
     {
@@ -60,7 +60,7 @@ public class HouseCleaningRobot
                 _grid[row][column] = new Cell { IsObstacle = input[row][column] == CellTypes.Obstacle };
                 if (input[row][column] == CellTypes.StartingPoint)
                 {
-                    _startingPosition = new Position(row, column, StartingDirection);
+                    _startingPosition = new PositionVector(row, column, StartingDirection);
                 }
             }
         }
@@ -68,7 +68,7 @@ public class HouseCleaningRobot
 
     public int CleanFloor()
     {
-        Position currentPosition = _startingPosition;
+        PositionVector currentPosition = _startingPosition;
         int numCellsVisited = 1;
         
         while(Visit(currentPosition))
@@ -80,14 +80,14 @@ public class HouseCleaningRobot
         return numCellsVisited;
     }
 
-    private bool Visit(Position position)
+    private bool Visit(PositionVector position)
     {
         return _grid[position.Row][position.Column].Visit(position.Direction);
     }
 
-    private MovementResult Move(Position currentPosition)
+    private MovementResult Move(PositionVector currentPosition)
     {
-        Position nextPosition = currentPosition.Direction switch
+        PositionVector nextPosition = currentPosition.Direction switch
         {
             Direction.Left => currentPosition with { Column = currentPosition.Column - 1 },
             Direction.Right => currentPosition with { Column = currentPosition.Column + 1 },
@@ -106,7 +106,7 @@ public class HouseCleaningRobot
         return new MovementResult(cellsMoved, nextPosition);
     }
 
-    private bool IsValidPosition(Position position) =>
+    private bool IsValidPosition(PositionVector position) =>
         !(
         position.Row < 0 || position.Row >= _grid.Length ||
         position.Column < 0 || position.Column >= _grid[position.Row].Length ||
